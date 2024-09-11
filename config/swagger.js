@@ -2,6 +2,7 @@
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json'); 
 
 // Opciones de Swagger JSDoc
 const swaggerOptions = {
@@ -25,7 +26,7 @@ const swaggerOptions = {
 
 const specs = swaggerJsdoc(swaggerOptions);
 
-module.exports = {
-  swaggerUi,
-  specs,
+module.exports = (app) => {
+  // Configuración de la ruta para servir la documentación
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 };
