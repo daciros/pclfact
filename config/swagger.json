@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/clients": {
+    "/api/clients/": {
       "get": {
         "summary": "Obtener todos los clientes",
         "responses": {
@@ -49,7 +49,7 @@
         }
       }
     },
-    "/clients/{clientId}": {
+    "/api/clients/{clientId}": {
       "get": {
         "summary": "Obtener un cliente por ID",
         "parameters": [
@@ -121,7 +121,7 @@
         }
       }
     },
-    "/invoices": {
+    "/api/invoices/": {
       "get": {
         "summary": "Obtener todas las facturas",
         "responses": {
@@ -158,7 +158,7 @@
         }
       }
     },
-    "/invoices/{invoiceNumber}": {
+    "/api/invoices/{invoiceNumber}": {
       "get": {
         "summary": "Obtener una factura por número",
         "parameters": [
@@ -230,7 +230,7 @@
         }
       }
     },
-    "/orders": {
+    "/api/orders/": {
       "get": {
         "summary": "Obtener todos los pedidos",
         "responses": {
@@ -267,7 +267,7 @@
         }
       }
     },
-    "/orders/{orderNumber}": {
+    "/api/orders/{orderNumber}": {
       "get": {
         "summary": "Obtener un pedido por número",
         "parameters": [
@@ -339,7 +339,7 @@
         }
       }
     },
-    "/products": {
+    "/api/products/": {
       "get": {
         "summary": "Obtener todos los productos",
         "responses": {
@@ -376,7 +376,7 @@
         }
       }
     },
-    "/products/{productCode}": {
+    "/api/products/{productCode}": {
       "get": {
         "summary": "Obtener un producto por código",
         "parameters": [

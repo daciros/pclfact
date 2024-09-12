@@ -1,29 +1,20 @@
 const crypto = require('crypto');
 
 const algorithm = 'aes-256-cbc';
-const key = crypto.randomBytes(32); // Clave para cifrar
-const iv = crypto.randomBytes(16); // Vector de inicialización
+const key = Buffer.from('b41ee67d84622d781a60a348ac7415d9d8b37a73920435712df397f405ddc452', 'hex'); // Clave de 32 bytes
+const iv = Buffer.from('aecb28ab0146b6149a840f90f8b1a6f1', 'hex'); // IV de 16 bytes
+// Cadena encriptada (tu URI encriptada)
+const encryptedUrl = 'd2e276f0fbdc6addb11f3fe73f7e64a2625d28b699b1ef7c1593135e124d05d55e82e891b04bb53361f792a2c5fc95a9ebbeb9619fd05619326bd3e834665bbf1785305ec5a4964411b8e7f9f2e170fc9af2f381c6748afd44b517721e818947f3ae16dfe3f58dd55a1d4bc7fa90f057955bd754dd9b81b21518e3eee4a872e6d19f65462ba7edeeffbe9ee0a58403ce';
 
-const decrypt = (encryptedText) => {
-  const decipher = crypto.createDecipheriv(algorithm, key, iv);
-  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
-};
+// Función para desencriptar la URL
+function decrypt(encryptedText) {
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    let decrypted = decipher.update(Buffer.from(encryptedText, 'hex'), 'binary', 'utf-8');
+    decrypted += decipher.final('utf-8');
+    return decrypted;
+}
 
-const encrypt = (text) => {
-  const cipher = crypto.createCipheriv(algorithm, key, iv);
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return encrypted;
-};
-
-const uri = 'mongodb+srv://Daciros:K8MWGZvddF52pfgL@cluster0.bwvh0sb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-const encryptedUri = encrypt(uri);
-console.log('URI cifrada:', encryptedUri);
-
-//const encryptedUri = '50647975665485d4335218c47fc48835007c13217be85c19c1719874a6f31d03443ad07cef5b82cd3af1fa0659f3aa59a2a3ff66879dd9e39c6d2d38f118cb521e01addb7555618de3cb38b2edf92b15367b018fd753bbec098c184d0676848f9f1feffe4ac7f5ca6382dc37b09d664288f3247cebb201033b479ae62b555564'; // Usa el valor cifrado generado
-const decryptedUri = decrypt(encryptedUri);
+const decryptedUri = decrypt(encryptedUrl);
 
 module.exports = {
     mongoURI: decryptedUri,
