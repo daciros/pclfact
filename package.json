@@ -1,0 +1,28 @@
+{
+  "name": "Sistema de facturacion",
+  "version": "1.0.0",
+  "description": "backend api sistema de facturacion",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "inst": "npm install",
+    "databd": "cd api_database && npm start",
+    "datalayer": "cd api_datalayer && npm start",
+    "deps": "\"cd api_database && npm install\" \"cd front_clientes && npm install\" \"cd api_datalayer && npm install\"",
+    "start": "cd front_clientes && npm start",
+    "dev": "cd api_database && npm run dev",
+    "build": "tsc",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Diaz",
+  "license": "ISC",
+  "dependencies": {
+    "hotelback": "file:",
+    "react": "^19.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

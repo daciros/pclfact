@@ -1,9 +1,12 @@
+// controllers/clientController.js
+
 const axios = require('axios');
 
-// URL de tu API de datos
-const API_DATA_URL = 'http://localhost:3090/api/clients/';
+// URL de la api database
+const API_DATA_URL = 'http://localhost:3090/api/clients';
 
-exports.getAllClients = async (req, res) => {
+
+exports.getClients = async (req, res) => {
     try {
         const response = await axios.get(API_DATA_URL);
         res.json(response.data);
@@ -28,8 +31,9 @@ exports.getClientById = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: 'Cliente no encontrado' });
     }
-}
-
+};
+    
+    
 exports.updateClient = async (req, res) => {
     try {
         const response = await axios.put(`${API_DATA_URL}/${req.params.id}`, req.body);
@@ -37,7 +41,7 @@ exports.updateClient = async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-}
+};
 
 exports.deleteClient = async (req, res) => {
     try {
@@ -46,4 +50,4 @@ exports.deleteClient = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: 'Cliente no encontrado' });
     }
-}
+};
