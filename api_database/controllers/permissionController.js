@@ -1,57 +1,61 @@
-// controllers/permissionController.js
+const permissionService = require('../services/permissionService');
 
-const Permission = require('../models/permissionModel');
-
-// Crear un nuevo permiso
 exports.createPermission = async (req, res) => {
   try {
-    const permission = new Permission(req.body);
-    await permission.save();
+    const permission = await permissionService.createPermission(req.body);
     res.status(201).json(permission);
   } catch (error) {
+    console.error('Error creating permission:', error);
     res.status(400).json({ error: error.message });
   }
 };
 
-// Obtener todos los permisos
 exports.getPermissions = async (req, res) => {
   try {
-    const permissions = await Permission.find();
+    const permissions = await permissionService.getAllPermissions();
     res.status(200).json(permissions);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error getting permissions:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-// Obtener un permiso por ID
 exports.getPermissionById = async (req, res) => {
   try {
-    const permission = await Permission.findById(req.params.id);
-    if (!permission) return res.status(404).json({ message: 'Permission not found' });
+    const permission = await permissionService.getPermissionById(req.params.id);
+    if (!permission) {
+      return res.status(404).json({ message: 'Permission not found' });
+    }
     res.status(200).json(permission);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error getting permission by ID:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-// Actualizar un permiso por ID
 exports.updatePermission = async (req, res) => {
   try {
-    const permission = await Permission.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!permission) return res.status(404).json({ message: 'Permission not found' });
+    const permission = await permissionService.updatePermission(
+      req.params.id,
+      req.body
+    );
+    if (!permission) {
+      return res.status(404).json({ message: 'Permission not found' });
+    }
     res.status(200).json(permission);
   } catch (error) {
+    console.error('Error updating permission:', error);
     res.status(400).json({ error: error.message });
   }
 };
 
-// Eliminar un permiso por ID
 exports.deletePermission = async (req, res) => {
-    try {
-      const permission = await Permission.findByIdAndDelete(req.params.id);
-      if (!permission) return res.status(404).json({ message: 'Permission not found' });
-      res.status(200).json({ message: 'Permission deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
+  try {
+    const permission = await permissionService.deletePermission(req.params.id);
+    if (!permission) return res.status(404).json({ message: 'Permission not found' });
+    res.status(200).json({ message: 'Permission deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting permission:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

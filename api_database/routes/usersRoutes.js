@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const { authorize } = require('../middleware/authorize');
 
-//definir rotas para usuarios
-router.get('/', userController.getUsers);
-router.get('/:id', userController.getUserById);
-router.post('/', userController.createUser);
-router.put('/:id', userController.updateUser);
-router.delete('/:id', userController.deleteUser);
+router.get('/', authorize, userController.getUsers);
+router.get('/:id', authorize, userController.getUserById);
+router.post('/', authorize, userController.createUser);
+router.put('/:id', authorize, userController.updateUser);
+router.delete('/:id', authorize, userController.deleteUser);
 
 module.exports = router;

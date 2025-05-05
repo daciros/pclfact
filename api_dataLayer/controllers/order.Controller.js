@@ -1,11 +1,11 @@
 const axios = require('axios');
 
+// URL de la api database
 const API_DATA_URL = 'http://localhost:3090/api/orders';
 
 exports.createOrder = async (req, res) => {
     try {
-        const response = await axios.post(API_DATA_URL, req.body);
-        res.status(201).json(response.data);
+      const response = await axios.post(API_DATA_URL, req.body);        res.status(201).json(response.data);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -13,7 +13,7 @@ exports.createOrder = async (req, res) => {
 
 
 exports.getOrders = async (req, res) => {
-    try {
+  try {
         const response = await axios.get(API_DATA_URL);
         res.json(response.data);
     } catch (error) {
@@ -22,12 +22,12 @@ exports.getOrders = async (req, res) => {
 };
 
 
-exports.getOrderById = async (req, res) => {
-    try {
+exports.getOrderById = async (req, res) => {    try {
         const response = await axios.get(`${API_DATA_URL}/${req.params.id}`);
         res.json(response.data);
     } catch (error) {
-        res.status(404).json({ message: 'Order not found' });
+        res.status(404).json({ message: 'Pedido no encontrado' });
+
     }
 };
 
@@ -47,6 +47,6 @@ exports.deleteOrder = async (req, res) => {
         await axios.delete(`${API_DATA_URL}/${req.params.id}`);
         res.status(204).json();
     } catch (error) {
-        res.status(404).json({ message: 'Order not found' });
+        res.status(404).json({ message: 'Pedido no encontrado' });
     }
 };

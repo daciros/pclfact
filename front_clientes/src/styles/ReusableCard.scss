@@ -1,0 +1,68 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3760522013.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:852532763.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3521215494.
+scss
+.reusable-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: 100%;
+  max-width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &__icon {
+    color: #555;
+  }
+
+  &__content {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  &__button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &--secondary {
+      background-color: #6c757d;
+
+      &:hover {
+        background-color: #5a6268;
+      }
+    }
+  }
+}

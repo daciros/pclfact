@@ -1,0 +1,83 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2627770808.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:1954159158.
+scss
+.invoice-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  &__filter {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__search-input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  &__filter-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  &__item {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  &__item-details {
+    display: flex;
+    flex-direction: column;
+
+    &__id {
+      font-weight: bold;
+    }
+  }
+
+  &__item-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__action-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &--edit {
+      color: #007bff;
+    }
+
+    &--delete {
+      color: #dc3545;
+    }
+  }
+}

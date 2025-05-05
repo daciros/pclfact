@@ -1,0 +1,54 @@
+scss
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-weight: bold;
+  }
+
+  &__input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    &:focus{
+      border: 1px solid #007bff;
+    }
+  }
+
+  &__button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    &:hover{
+      background-color: #0056b3;
+    }
+  }
+
+  &__error {
+    color: red;
+    font-size: 0.8rem;
+  }
+
+  &__row {
+    display: flex;
+    gap: 1rem;
+    &__field{
+        width: 50%;
+    }
+  }
+}

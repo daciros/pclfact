@@ -1,57 +1,56 @@
-// controllers/stockController.js
+const stockService = require('../services/stockService');
 
-const Stock = require('../models/stockModel');
-
-// Crear un nuevo registro de stock
+// Create a new stock record
 exports.createStock = async (req, res) => {
   try {
-    const stock = new Stock(req.body);
-    await stock.save();
-    res.status(201).json(stock);
+    const newStock = await stockService.createStock(req.body);
+    res.status(201).json(newStock);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Obtener todos los registros de stock
-exports.getStocks = async (req, res) => {
+// Get all stock records
+exports.getAllStocks = async (req, res) => {
   try {
-    const stocks = await Stock.find();
+    const stocks = await stockService.getAllStocks();
     res.status(200).json(stocks);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: "Error retrieving stock records", error: error.message });
   }
 };
 
-// Obtener un registro de stock por ID
+// Get a stock record by ID
 exports.getStockById = async (req, res) => {
   try {
-    const stock = await Stock.findById(req.params.id);
-    if (!stock) return res.status(404).json({ message: 'Stock not found' });
+    const stock = await stockService.getStockById(req.params.id);
+    if (!stock) {
+      return res.status(404).json({ message: 'Stock not found' });
+    }
     res.status(200).json(stock);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: "Error retrieving stock record", error: error.message });
   }
 };
 
-// Actualizar un registro de stock por ID
+// Update a stock record by ID
 exports.updateStock = async (req, res) => {
   try {
-    const stock = await Stock.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const stock = await stockService.updateStock(req.params.id, req.body);
     if (!stock) return res.status(404).json({ message: 'Stock not found' });
     res.status(200).json(stock);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ message: "Error updating stock record", error: error.message });
   }
 };
 
-// Eliminar un registro de stock por ID
+// Delete a stock record by ID
 exports.deleteStock = async (req, res) => {
   try {
-    const stock = await Stock.findByIdAndDelete(req.params.id);
+    const stock = await stockService.deleteStock(req.params.id);
     if (!stock) return res.status(404).json({ message: 'Stock not found' });
-    res.status(200).json({ message: 'Stock deleted successfully' });
+    res.status(204).json();
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: "Error deleting stock record", error: error.message });
   }
 };

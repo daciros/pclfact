@@ -1,0 +1,71 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2986385827.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:621378112.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:626110820.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3723900347.
+scss
+.supplier-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 10px;
+    
+    &.full-width {
+      flex-direction: column;
+    }
+    
+    .form-field {
+      flex: 1;
+      
+      &.full-width {
+        flex: 1 0 100%;
+      }
+    }
+  }
+}

@@ -1,18 +1,19 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
-const clientRoutes = require('./routes/client.routes'); // Ruta para clientes
+const routes = require('./routes/index.Routes');
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3050;
 
+// cors middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(routes);
 
-// Rutas
-app.use('/clients', clientRoutes);
-
+// Start server
 app.listen(PORT, () => {
     console.log(`Data Layer API running on port ${PORT}`);
 });
+

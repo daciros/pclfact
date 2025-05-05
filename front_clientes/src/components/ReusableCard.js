@@ -1,26 +1,29 @@
 import React from 'react';
+import '../styles/ReusableCard.scss';
 
-const ReusableCard = ({ title, content, actions }) => {
+const ReusableCard = ({ title, content, actions, className }) => {
     
   return (
-    <div className="card">
-      <div className="card-header">
+    <div className={`reusable-card ${className || ''}`}>
+      <div className="reusable-card-header">
         {title}
       </div>
-      <div className="card-body">
+      <div className="reusable-card-body">
         {typeof content === 'string' ? <p>{content}</p> : content}
       </div>
       {actions && actions.length > 0 && (
-        <div className="card-footer">
+        <div className="reusable-card-footer">
           {actions.map((action, index) => (
-            <button key={index} className="btn btn-primary">
-              {action}
+            <button key={index} className="reusable-card-button">
+              {action.text}
             </button>
           ))}
+        </div>
 
         
-    </div>)};
-    </div>)
-};
+      )};
+    </div>
+    )
+  };
 
 export default ReusableCard;

@@ -1,46 +1,55 @@
 // controllers/roleController.js
 
-const Role = require('../models/roleModel');
+const roleService = require('../services/roleService');
 
 // Crear un nuevo rol
 exports.createRole = async (req, res) => {
   try {
-    const role = new Role(req.body);
-    await role.save();
-    res.status(201).json(role);
+    const newRole = await roleService.createRole(req.body);
+    res.status(201).json(newRole);
   } catch (error) {
+    console.error("Error creating role:", error);
     res.status(400).json({ error: error.message });
   }
 };
 
 // Obtener todos los roles
-exports.getRoles = async (req, res) => {
+exports.getAllRoles = async (req, res) => {
   try {
-    const roles = await Role.find();
-    res.status(200).json(roles);
+    const allRoles = await roleService.getAllRoles();
+    res.status(200).json(allRoles);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error getting all roles:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 // Obtener un rol por ID
 exports.getRoleById = async (req, res) => {
   try {
-    const role = await Role.findById(req.params.id);
-    if (!role) return res.status(404).json({ message: 'Role not found' });
-    res.status(200).json(role);
+    const { id } = req.params;
+    const roleById = await roleService.getRoleById(id);
+    if (!roleById) {
+      return res.status(404).json({ message: "Role not found" });
+    }
+    res.status(200).json(roleById);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error getting role by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 // Actualizar un rol por ID
 exports.updateRole = async (req, res) => {
   try {
-    const role = await Role.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!role) return res.status(404).json({ message: 'Role not found' });
-    res.status(200).json(role);
+    const { id } = req.params;
+    const updatedRole = await roleService.updateRole(id, req.body);
+    if (!updatedRole) {
+      return res.status(404).json({ message: "Role not found" });
+    }
+    res.status(200).json(updatedRole);
   } catch (error) {
+    console.error("Error updating role:", error);
     res.status(400).json({ error: error.message });
   }
 };
@@ -48,10 +57,13 @@ exports.updateRole = async (req, res) => {
 // Eliminar un rol por ID
 exports.deleteRole = async (req, res) => {
   try {
-    const role = await Role.findByIdAndDelete(req.params.id);
-    if (!role) return res.status(404).json({ message: 'Role not found' });
-    res.status(200).json({ message: 'Role deleted successfully' });
+    const deletedRole = await roleService.deleteRole(req.params.id);
+    if (!deletedRole) {
+      return res.status(404).json({ message: "Role not found" });
+    }
+    res.status(200).json({ message: "Role deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error deleting role:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };

@@ -1,0 +1,52 @@
+
+.client-list-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .search-bar-container {
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .search-bar {
+      border-radius: 15px;
+      border: 1px solid #ccc;
+      padding: 0.5rem 1rem;
+      width: 50%;
+    }
+  }
+
+  .table-container {
+    padding: 1rem;
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background-color: #f0f0f0;
+
+        th {
+          padding: 0.5rem;
+          text-align: left;
+          border-bottom: 1px solid #ccc;
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: #f8f8f8;
+          }
+
+          td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+          }
+        }
+      }
+    }
+  }
+}

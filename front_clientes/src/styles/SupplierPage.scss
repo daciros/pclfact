@@ -1,0 +1,56 @@
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:899581452.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3454836066.
+scss
+.supplier-page {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    &__title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    &__actions {
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+  &__content {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      background-color: #f0f0f0;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  }
+
+  &__pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+}

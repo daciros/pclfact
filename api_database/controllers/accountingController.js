@@ -1,57 +1,60 @@
-// controllers/accountingController.js
+const accountingService = require('../services/accountingService');
 
-const Accounting = require('../models/accountingModel');
-
-// Crear una nueva transacción contable
-exports.createTransaction = async (req, res) => {
-  try {
-    const transaction = new Accounting(req.body);
-    await transaction.save();
-    res.status(201).json(transaction);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+// Create a new accounting
+exports.createAccounting = async (req, res) => {
+    try {
+        const accounting = await accountingService.createAccounting(req.body);
+        res.status(201).json(accounting);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-// Obtener todas las transacciones contables
-exports.getTransactions = async (req, res) => {
-  try {
-    const transactions = await Accounting.find();
-    res.status(200).json(transactions);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Get all accountings
+exports.getAllAccountings = async (req, res) => {
+    try {
+        const accountings = await accountingService.getAllAccountings();
+        res.status(200).json(accountings);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
-// Obtener una transacción contable por ID
-exports.getTransactionById = async (req, res) => {
-  try {
-    const transaction = await Accounting.findById(req.params.id);
-    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
-    res.status(200).json(transaction);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Get accounting by ID
+exports.getAccountingById = async (req, res) => {
+    try {
+        const accounting = await accountingService.getAccountingById(req.params.id);
+        if (!accounting) {
+            return res.status(404).json({ message: 'Accounting not found' });
+        }
+        res.status(200).json(accounting);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
-// Actualizar una transacción contable por ID
-exports.updateTransaction = async (req, res) => {
-  try {
-    const transaction = await Accounting.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
-    res.status(200).json(transaction);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+// Update an accounting by ID
+exports.updateAccounting = async (req, res) => {
+    try {
+        const accounting = await accountingService.updateAccounting(req.params.id, req.body);
+        if (!accounting) {
+            return res.status(404).json({ message: 'Accounting not found' });
+        }
+        res.status(200).json(accounting);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
-// Eliminar una transacción contable por ID
-exports.deleteTransaction = async (req, res) => {
-  try {
-    const transaction = await Accounting.findByIdAndDelete(req.params.id);
-    if (!transaction) return res.status(404).json({ message: 'Transaction not found' });
-    res.status(200).json({ message: 'Transaction deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Delete an accounting by ID
+exports.deleteAccounting = async (req, res) => {
+    try {
+        const accounting = await accountingService.deleteAccounting(req.params.id);
+        if (!accounting) {
+            return res.status(404).json({ message: 'Accounting not found' });
+        }
+        res.status(200).json({ message: 'Accounting deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };

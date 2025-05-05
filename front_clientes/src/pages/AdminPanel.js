@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchData } from '../utils/api';
 import ReusableTable from '../components/ReusableTable';
+import '../styles/AdminPanel.scss';
 
 function AdminPanel() {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ function AdminPanel() {
   }, []);
 
   return (
-    <div>
+    <div className='admin-panel-container'>
       Admin Panel
       <ReusableTable data={data} columns={columns}/>
     </div>

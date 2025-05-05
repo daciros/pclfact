@@ -1,17 +1,18 @@
 import React from 'react';
+import '../styles/ReusableTable.scss'
 
 const ReusableTable = ({ data, columns, actions, className }) => {
   if (!data || data.length === 0) {
     return <p>No data available</p>;
   }
 
-  // Helper function to get the value of a nested property
   const getNestedValue = (obj, path) => {
     return path.split('.').reduce((acc, part) => acc && acc[part], obj);
   };
-
+  
+  
   return (
-    <table className={`reusable-table ${className || ''}`}>
+    <table className={`reusable-table ${className || ''}`} >
       <thead>
         <tr>
           {columns.map((column, index) => (
@@ -23,9 +24,8 @@ const ReusableTable = ({ data, columns, actions, className }) => {
       <tbody>
         {data.map((row, rowIndex) => (
           <tr
-            key={rowIndex}
-            onClick={() => onRowClick && onRowClick(row)}
-            className={onRowClick ? 'clickable-row' : ''}
+            key={rowIndex}           
+            
           >
             {columns.map((column, colIndex) => {
               const cellValue = column.accessor
@@ -41,10 +41,12 @@ const ReusableTable = ({ data, columns, actions, className }) => {
               );
             })}
             {actions && actions.length > 0 && (
-              <td>
+              <td className='actions-cell'>
                 {actions.map((action, actionIndex) => (
-                  <button key={`${rowIndex}-${actionIndex}`} onClick={(e) => {
+                  <button key={`${rowIndex}-${actionIndex}`} onClick={ (e) => {
                     e.stopPropagation();
+                    e.preventDefault();
+
                     action.action(row);
                   }}>
                     {action.text}
@@ -58,6 +60,5 @@ const ReusableTable = ({ data, columns, actions, className }) => {
     </table>
   );
 };
-
 
 export default ReusableTable;

@@ -7,7 +7,7 @@
   "scripts": {
     "inst": "npm install",
     "databd": "cd api_database && npm start",
-    "datalayer": "cd api_datalayer && npm start",
+    "datalayer": "cd api_dataLayer && npm start",
     "deps": "\"cd api_database && npm install\" \"cd front_clientes && npm install\" \"cd api_datalayer && npm install\"",
     "start": "cd front_clientes && npm start",
     "dev": "cd api_database && npm run dev",
@@ -19,8 +19,12 @@
   "author": "Alejandro Diaz",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.0.2",
     "hotelback": "file:",
-    "react": "^19.1.0"
+    "react": "^19.1.0",
+    "sass": "^1.87.0"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

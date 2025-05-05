@@ -1,0 +1,26 @@
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: fit-content;
+  position: absolute;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.menu-list{
+    list-style: circle;
+  
+}
+  &__item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+}
+

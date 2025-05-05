@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const permissionController = require('../controllers/permissionController');
+const { authorize } = require('../middleware/authorize');
 
-// Definir las rutas para permisos
-router.get('/', permissionController.getPermissions);
-router.get('/:id', permissionController.getPermissionById);
-router.post('/', permissionController.createPermission);
-router.put('/:id', permissionController.updatePermission);
-router.delete('/:id', permissionController.deletePermission);
+router.get('/', authorize, permissionController.getPermissions);
+router.get('/:id', authorize, permissionController.getPermissionById);
+router.post('/', authorize, permissionController.createPermission);
+router.put('/:id', authorize, permissionController.updatePermission);
+router.delete('/:id', authorize, permissionController.deletePermission);
 
 module.exports = router;

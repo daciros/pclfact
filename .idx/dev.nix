@@ -42,8 +42,7 @@
     workspace = {
       # Runs when a workspace is first created
       onCreate = {       
-         inst = "npm run databd";
-         dlay = "npm run datalayer";
+         inst = "npm run databd && npm run datalayer";
          deps = "npm run deps";
       };
       # Runs when the workspace is (re)started 

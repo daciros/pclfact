@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
+const { authorize } = require('../middleware/authorize');
 
-// Definir las rutas para productos
-router.get('/', productController.getProducts);
-router.get('/:id', productController.getProductById);
-router.post('/', productController.createProduct);
-router.put('/:id', productController.updateProduct);
-router.delete('/:id', productController.deleteProduct);
+router.get('/', authorize, productController.getAllProducts);
+router.get('/:id', authorize, productController.getProductById);
+router.post('/', authorize, productController.createProduct);
+router.put('/:id', authorize, productController.updateProduct);
+router.delete('/:id', authorize, productController.deleteProduct);
 
 module.exports = router;

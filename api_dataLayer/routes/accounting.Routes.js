@@ -3,10 +3,10 @@ const router = express.Router();
 const accountingController = require('../controllers/accounting.Controller.js');
 
 // Definir las rutas para contabilidad
-router.get('/', accountingController.getTransactions);
-router.get('/:id', accountingController.getTransactionById);
-router.post('/', accountingController.createTransaction);
-router.put('/:id', accountingController.updateTransaction);
-router.delete('/:id', accountingController.deleteTransaction);
+router.get('/', accountingController.getAllAccountings);
+router.get('/:id', accountingController.getAccountingById);
+router.post('/', accountingController.createAccounting);
+router.put('/:id', accountingController.updateAccounting);
+router.delete('/:id', accountingController.deleteAccounting);
 
 module.exports = router;

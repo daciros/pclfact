@@ -1,0 +1,139 @@
+
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+
+  .header {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      color: #333;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #eee;
+        margin-right: 10px;
+      }
+
+      .logout-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #007bff;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+    position: fixed;
+    height: 100%;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 10px 0;
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          display: block;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    padding: 20px;
+    margin-left: 250px;
+    flex-grow: 1;
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h2 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #333;
+      }
+    }
+  }
+
+  .table-container {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background-color: #f4f4f4;
+
+        th {
+          text-align: left;
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+
+          td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      position: relative;
+      height: auto;
+    }
+
+    .content {
+      margin-left: 0;
+    }
+  }
+}

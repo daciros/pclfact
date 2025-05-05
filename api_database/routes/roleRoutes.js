@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const roleController = require('../controllers/roleController');
-
-// Definir las rutas para roles
-router.get('/', roleController.getRoles);
-router.get('/:id', roleController.getRoleById);
-router.post('/', roleController.createRole);
-router.put('/:id', roleController.updateRole);
-router.delete('/:id', roleController.deleteRole);
+const {authorize} = require('../middleware/authorize');
+const { getAllRoles, getRoleById, createRole, updateRole, deleteRole } = roleController;
+router.get('/', authorize, getAllRoles);
+router.get('/:id', authorize, getRoleById);
+router.post('/', authorize, createRole);
+router.put('/:id', authorize, updateRole);
+router.delete('/:id', authorize, deleteRole);
 
 module.exports = router;

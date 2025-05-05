@@ -1,0 +1,43 @@
+@import './ReusableMenu';
+@import './ReusableTable';
+@import './ReusableCard';
+@import './ClientForm';
+@import './ClientList';
+@import './InvoiceForm';
+@import './InvoiceList';
+@import './OrderForm';
+@import './OrderList';
+@import './CategoryForm';
+@import './CategoryList';
+@import './UserForm';
+@import './UserList';
+@import './PaymentForm';
+@import './PaymentList';
+@import './SupplierForm';
+@import './SupplierList';
+@import './ProductForm';
+@import './ProductList';
+@import './AdminPanel';
+@import './ClientPage';
+@import './ProductPage';
+@import './UserPanel';
+@import './InvoicePage';
+@import './OrderPage';
+@import './CategoryPage';
+@import './UserPage';
+@import './PaymentPage';
+@import './SupplierPage';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
