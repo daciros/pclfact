@@ -1,23 +1,21 @@
 import React from 'react';
-import '../styles/ReusableTable.scss'
-
+import { Table, Button } from 'react-bootstrap';
 const ReusableTable = ({ data, columns, actions, className }) => {
   if (!data || data.length === 0) {
-    return <p>No data available</p>;
+    return <p className="text-center">No data available</p>;
   }
-
+  
   const getNestedValue = (obj, path) => {
     return path.split('.').reduce((acc, part) => acc && acc[part], obj);
   };
   
   
-  return (
-    <table className={`reusable-table ${className || ''}`} >
-      <thead>
+  return (  <Table striped bordered hover className={className || ''}>
+      <thead className="table-dark">   
         <tr>
           {columns.map((column, index) => (
             <th key={index}>{column.label}</th>
-          ))}
+        ))}
           {actions && actions.length > 0 && <th>Actions</th>}
         </tr>
       </thead>
@@ -33,7 +31,7 @@ const ReusableTable = ({ data, columns, actions, className }) => {
                 : row[column.key];
 
               return (
-                <td key={colIndex}>
+                <td key={colIndex} >
                   {column.format
                     ? column.format(cellValue, row)
                     : cellValue}
@@ -41,14 +39,17 @@ const ReusableTable = ({ data, columns, actions, className }) => {
               );
             })}
             {actions && actions.length > 0 && (
-              <td className='actions-cell'>
+              <td>
                 {actions.map((action, actionIndex) => (
-                  <button key={`${rowIndex}-${actionIndex}`} onClick={ (e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
+                  <button 
+                    key={`${rowIndex}-${actionIndex}`} 
+                    className="btn btn-primary me-2 mb-1" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
 
-                    action.action(row);
-                  }}>
+                      action.action(row);
+                    }}>
                     {action.text}
                  </button>
                 ))}
@@ -57,7 +58,7 @@ const ReusableTable = ({ data, columns, actions, className }) => {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

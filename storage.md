@@ -3,3 +3,5 @@
 MDM-PQR-46412626
 
 <span id="2" data-emoji="🤔" class="b96 emojik wa" aria-label="🤔" tabindex="-1" data-emoji-index="2" style="background-position: -64px -96px;"></span>
+
+    //"dev": "cd api_database && npm run dev",

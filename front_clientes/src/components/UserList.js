@@ -1,46 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import { getAllUsers } from '../utils/api';
-import '../styles/UserList.scss';
+import { fetchGeneric } from '../utils/api';
+import { ListGroup, Button, Card, Alert } from 'react-bootstrap';
 
-function UserList() {
+const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  const getAllUsers = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+        const data = await fetchGeneric('users');
+        setUsers(data);
+    } catch (error) {
+        setError(error.message || 'An error occurred while fetching users');
+    } finally {
+        setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const data = await getAllUsers();
-        setUsers(data);
-      } catch (err) {
-        setError('Failed to load users.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
+    getAllUsers();
   }, []);
 
   if (loading) {
-    return <div className='loading'>Loading users...</div>;
+    return <div className="text-center mt-4">Loading users...</div>
   }
 
   if (error) {
-    return <div className='error'>Error: {error}</div>;
+    return <Alert variant="danger" className="mt-4">Error: {error}</Alert>;
   }
 
   return (
-    <div className='user-list-container'>
-      <h2>Users</h2>
-      <button className='user-list-create-button'>Create User</button>
-      <ul>
-        {users.map(user => (
-          <li key={user.id} className='user-list-item'>
-            {user.name} - {user.email}
-          </li>
-        ))}
-      </ul>
+    <div className="container mt-4">
+      <Card>
+        <Card.Header className="d-flex justify-content-between align-items-center">
+          <h2>Users</h2>          
+            <Button variant="primary">Create User</Button>
+          
+        </Card.Header>
+        <ListGroup variant="flush">
+          {users.map(user => (
+            <ListGroup.Item key={user.id}>
+              {user.name} - {user.email}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </Card>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 const axios = require('axios');
+const config = require('../config');
 
-const API_DATABASE_URL = 'http://localhost:3090/api/categories';
+const API_DATABASE_URL = '/api/categories';
 
 const getAllCategories = async (req, res) => {
   try {

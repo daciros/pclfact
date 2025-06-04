@@ -1,54 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/InvoiceList.scss'
+import { fetchGeneric } from '../utils/api';
+import { Card, Button, ListGroup, Alert } from 'react-bootstrap';
 
-function InvoiceList() { 
+function InvoiceList() {
   const [invoices, setInvoices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/invoices'); 
-        if (!response.ok) {
-          throw new Error('Failed to fetch invoices');
+    const fetchInvoices = async () => {
+      setLoading(true);
+      setError(null);
+      try{
+          const data = await fetchGeneric('invoices');
+          setInvoices(data);
+        } catch (err) {
+            setError(err.message || 'An error occurred');
+        } finally {
+            setLoading(false);
         }
-        const data = await response.json();
-        setInvoices(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    }
 
-    fetchData();
+    fetchInvoices();
+
   }, []);
 
   const handleCreateInvoice = () => {
     console.log('Create new invoice');
   };
 
-  if (loading) {
-    return <div className='loading'>Loading invoices...</div>;
-  }
+    if (loading) {
+        return <Alert variant="info">Loading invoices...</Alert>;
+    }
 
-  if (error) {
-    return <div className='error'>Error: {error}</div>;
-  }
+    if (error) {
+        return <Alert variant="danger">Error: {error}</Alert>;
+    }
 
   return (
-    <div className='invoice-list-container'>
-      <h2>Invoice List</h2>
-      <button className='button-create' onClick={handleCreateInvoice}>Create Invoice</button>
-      <ul>
-        {invoices.map(invoice => (
-          <li key={invoice.id}>
-            Invoice ID: {invoice.id}, Date: {invoice.date}, Total: {invoice.total}
-          </li>
-        ))}
-      </ul>
-    </div>
+      <Card>
+          <Card.Body>
+              <Card.Title>Invoice List</Card.Title>
+              <Button variant="primary" onClick={handleCreateInvoice} className="mb-3">
+                  Create Invoice
+              </Button>
+              <ListGroup>
+                  {invoices.map((invoice) => (
+                      <ListGroup.Item key={invoice.id}>
+                          Invoice ID: {invoice.id}, Date: {invoice.date}, Total: {invoice.total}
+                      </ListGroup.Item>
+                  ))}
+              </ListGroup>
+          </Card.Body>
+      </Card>
   );
 }
 

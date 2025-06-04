@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/PaymentForm.scss';
+import { Form, Button, Card, Alert } from 'react-bootstrap';
 
 function PaymentForm() {
   const [formData, setFormData] = useState({
@@ -40,52 +40,58 @@ function PaymentForm() {
   };
 
   return (
-    <div className="payment-form-container">
-      <h2 className='payment-form-title'>Create Payment</h2>
-      {error && <p className='payment-form-error'>{error}</p>}
-      <form className='payment-form' onSubmit={handleSubmit}>
-        <div className='form-group'>
-          <label className='payment-form-label' htmlFor="amount">Amount:</label>
-          <input className='payment-form-input'
-                type="number"
-                id="amount"
-                name="amount"
-                value={formData.amount}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className='form-group'>
-          <label className='payment-form-label' htmlFor="paymentMethod">Payment Method:</label>
-          <input className='payment-form-input'
-                type="text"
-                id="paymentMethod"
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className='form-group'>
-          <label className='payment-form-label' htmlFor="date">Date:</label>
-          <input className='payment-form-input'
-                type="date"
-                id="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className='payment-form-button-container'>
-          <button className='payment-form-button' type="submit" disabled={loading}>
+    <Card className="mt-4">
+      <Card.Body>
+        <Card.Title>Create Payment</Card.Title>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="amount">
+            <Form.Label>
+                Amount:
+            </Form.Label>
+            <Form.Control
+              type="number"
+              name="amount"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="paymentMethod">
+            <Form.Label>
+                Payment Method:
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="paymentMethod"
+              value={formData.paymentMethod}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="date">
+            <Form.Label>
+                Date:
+            </Form.Label>
+            <Form.Control
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <div className="d-flex justify-content-end">
+            <Button type="submit" variant="primary" className="me-2" disabled={loading}>
               {loading ? 'Creating...' : 'Create Payment'}
-            </button>
-            <button className='payment-form-button' type="button" onClick={handleReset} disabled={loading}>
+            </Button>
+            <Button type="button" variant="secondary" onClick={handleReset} disabled={loading}>
               Reset
-            </button>
-        </div>
-      </form>
-    </div>
+            </Button>
+          </div>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 }
+export default PaymentForm;

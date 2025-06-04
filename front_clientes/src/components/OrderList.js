@@ -1,52 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/OrderList.scss'
-
+import { fetchGeneric } from '../utils/api';
+import { Card, Button, ListGroup, Alert } from 'react-bootstrap';
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch('/api/orders');
-        if (!response.ok) {
-          throw new Error('Failed to fetch orders');
-        }
-        const data = await response.json();
+  const getAllOrders = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+        const data = await fetchGeneric('orders');
         setOrders(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
+    } catch (error) {
+        setError(error.message || 'An error occurred while fetching orders');
+    } finally {
         setLoading(false);
-      }
-    };
+    }
+  };
 
-    fetchOrders();
+  useEffect(() => {
+    
+    getAllOrders();
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading orders...</div>;
+    return <div className="text-center">Loading orders...</div>
   }
 
   if (error) {
-    return <div className="error">Error: {error}</div>;
+    return <Alert variant="danger">Error: {error}</Alert>;
   }
 
   return (
-    <div className='order-list-container'>
-      <h2>Order List</h2>
-      
-        <button className='create-order-button'>Create Order</button>
-    
-      <ul className='order-list'>
-        {orders.map(order => (
-          <li key={order.id}>
-            Order ID: {order.id} - Client: {order.clientId} - Date: {order.date}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Card className="mt-4">
+      <Card.Header>Order List</Card.Header>
+      <Card.Body>
+        <Button className="mb-3">Create Order</Button>
+        <ListGroup>
+          {orders.map(order => (
+            <ListGroup.Item key={order.id} >
+              Order ID: {order.id} - Client: {order.clientId} - Date: {order.date}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </Card.Body>
+    </Card>
   );
 };
 

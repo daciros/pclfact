@@ -1,58 +1,72 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import ReusableTable from './ReusableTable';
-import { Button } from '@mui/material';
-import '../styles/ProductList.scss';
-
+import { getAllGeneric } from '../utils/api';
+import { Card, Button, Table, Alert } from 'react-bootstrap';
+  
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/products');
-        setProducts(response.data);
-      } catch (err) {
-        setError(err.message || 'An error occurred while fetching products.');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const getAllProducts = async () => {
+    try {
+      const data = await getAllGeneric('api/products/');
+      setProducts(data);
+    } catch (error) {
+      setError(error.message || 'An error occurred while fetching products.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchProducts();
+  useEffect(() => {
+    
+    getAllProducts();
   }, []);
 
   const handleAddProduct = () => {
-    
+
     console.log('Add new product');
   };
 
   if (loading) {
-    return <div className="loading-product">Loading products...</div>;
+    return <div className="text-center">Loading products...</div>
   }
 
   if (error) {
-    return <div className="error-product">Error: {error}</div>;
+    return <Alert variant="danger">Error: {error}</Alert>
   }
 
-  const headers = [
-    { label: 'ID', key: '_id' },
-    { label: 'Name', key: 'nombre' },
-    { label: 'Description', key: 'descripcion' },
-    { label: 'Price', key: 'precio' },
-    { label: 'Stock', key: 'stock' },
-  ];
-
   return (
-    <div className="product-list-container">
-      <h1>Products</h1>
-      <Button variant="contained" color="primary" onClick={handleAddProduct}>
-        Add Product
-      </Button>
-      <ReusableTable headers={headers} data={products} />
-    </div>
+    <Card>
+      <Card.Body>
+        <Card.Title>Products</Card.Title>
+        <Button className="mb-3" onClick={handleAddProduct}>
+          Add Product
+        </Button>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th> 
+              <th>Name</th> 
+              <th>Description</th> 
+              <th>Price</th> 
+              <th>Stock</th> 
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id}</td> 
+                <td>{product.nombre}</td> 
+                <td>{product.descripcion}</td> 
+                <td>{product.precio}</td> 
+                <td>{product.stock}</td> 
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card.Body>
+    </Card>
   );
 };
 

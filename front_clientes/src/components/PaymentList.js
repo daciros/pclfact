@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { getPayments } from '../utils/api';
-import '../styles/PaymentList.scss'
+import { fetchGeneric } from '../utils/api';
+
 
 function PaymentList() {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  
   useEffect(() => {
     const fetchPayments = async () => {
+        setLoading(true);
+        setError(null);
       try {
-        const data = await getPayments();
+        const data = await fetchGeneric('payments');
         setPayments(data);
-      } catch (err) {
-        setError('Failed to load payments.');
-      } finally {
-        setLoading(false);
-      }
-    };
+        } catch (err){
+            setError(err.message || 'An error occurred');
+        } finally {
+            setLoading(false);
+        }
+    }
 
     fetchPayments();
   }, []);
@@ -30,20 +32,25 @@ function PaymentList() {
         return <div className="error">Error: {error}</div>;
   }
 
-  return (
-    <div className="payment-list-container">
-      <h2>Payment List</h2>
-      <button className="create-payment-button">Create New Payment</button>
-      <ul>
-        {payments.map(payment => (
-          <li key={payment.id}>
-            Payment ID: {payment.id}, Amount: {payment.amount}
-            {/* Add more payment details here */}
-          </li>
-        ))}
-      </ul>
+  return ( <div className="container mt-4">
+        <div className="card">
+            <div className="card-header d-flex justify-content-between align-items-center">
+                <h2>Payment List</h2>
+                <button className="btn btn-primary">Create New Payment</button>
+            </div>
+            <div className="card-body">
+                <ul className="list-group">
+                    {payments.map(payment => (
+                        <li key={payment.id} className="list-group-item">
+                            Payment ID: {payment.id}, Amount: {payment.amount}
+                            {/* Add more payment details here */}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
     </div>
-  );
+);
 }
 
 export default PaymentList;

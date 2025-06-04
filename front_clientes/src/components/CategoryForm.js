@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import '../styles/CategoryForm.scss';
+import { Form, Button, Card, Alert } from 'react-bootstrap';
+
+
+
   
 function CategoryForm() {
   const [name, setName] = useState('');
@@ -26,34 +29,36 @@ function CategoryForm() {
   };
 
   return (
-    <div className="category-form-container">
-      <h2>Create Category</h2>
-      {error && <div className="error">{error}</div>}
-      <form className="category-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className='form-label' htmlFor="name">Name:</label>
-          <input className='form-input'
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <button className='form-button' type="submit" disabled={loading}>
-            {loading ? 'Creating...' : 'Create'}
-          </button>
-          <button
-          className='form-button'
-           type="button" 
-           onClick={handleReset} 
-           disabled={loading}>
-            Reset
-          </button>
-        </div>
-      </form>
-    </div>
+    <Card className="mt-4">
+      <Card.Body>
+        <Card.Title>Create Category</Card.Title>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>Name:</Form.Label>
+            <Form.Control
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <div className="d-flex justify-content-end">
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={loading}
+              className="me-2"
+            >
+              {loading ? 'Creating...' : 'Create'}
+            </Button>
+            <Button variant="secondary" type="button" onClick={handleReset} disabled={loading}>
+              Reset
+            </Button>
+          </div>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 }
 

@@ -11,6 +11,7 @@
      pkgs.python311Packages.pip
      pkgs.nodejs_20
      pkgs.nodePackages.nodemon
+     pkgs.concurrently
   ];
 
   # Sets environment variables in the workspace
@@ -24,31 +25,37 @@
     # Enable previews
     previews = {
       enable = true;
-      previews = {
-         web = {
-           # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
-           # and show it in IDX's web preview panel, you can delete this section if you don't want to use previews
-           command = ["npm" "run" "dev"];
-           manager = "web";
-           env = {
-        #     # Environment variables to set for your server
-             PORT = "$PORT";
-           };
-         };
-      };
+     previews = {
+    datalayer = {
+      command = ["npm" "run" "start"];
+      cwd = "./api_dataLayer";
+      manager = "web";
+    };
+    frontend = {
+      command = ["npm" "run" "start"];
+      cwd = "./front_clientes";
+      manager = "web";
+    };
+    database = {
+      command = ["npm" "run" "start"];
+      cwd = "./api_database";
+      manager = "web";
+    };
+  };
     };
 
     # Workspace lifecycle hooks
     workspace = {
       # Runs when a workspace is first created
       onCreate = {       
-         inst = "npm run databd && npm run datalayer";
+         inst = "npm run datalayer";
          deps = "npm run deps";
       };
       # Runs when the workspace is (re)started 
       onStart = {
         # Example: start a background task to watch and re-build backend code
-         watch-backend = "npm run dev";
+         #watch-backend = "npm run datalayer";
+         start-projects = "concurrently \"cd api_dataLayer && npm start\" \"cd front_clientes && npm start\" \"cd api_database && npm start\"";
       };
     };
   };

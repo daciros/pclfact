@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ClientList from '../components/ClientList';
 import ClientForm from '../components/ClientForm';
-//import './AdminPanel.css';
-import '../styles/ClientPage.scss';
+import { Container } from 'react-bootstrap';
+
 function ClientPage() {
   const [showForm, setShowForm] = useState(false);
 
@@ -15,15 +15,15 @@ function ClientPage() {
   };
 
   return (
-    <div className="client-page-container">
+    <Container className="container-fluid">
       <h1>Client Management</h1>
-      {!showForm && <button className="client-page-button" onClick={handleAddClient}>Add Client</button>}
+      {!showForm && <button className="btn btn-primary" onClick={handleAddClient}>Add Client</button>}
       {showForm ? (
         <ClientForm onClose={handleFormClose} />
       ) : (
         <ClientList />
       )}
-    </div>
+    </Container>
   );
 }
 

@@ -1,29 +1,30 @@
 import React from 'react';
-import '../styles/ReusableCard.scss';
+import { Card, Button } from 'react-bootstrap';
 
 const ReusableCard = ({ title, content, actions, className }) => {
-    
   return (
-    <div className={`reusable-card ${className || ''}`}>
-      <div className="reusable-card-header">
-        {title}
-      </div>
-      <div className="reusable-card-body">
+    <Card className={className}>
+      {title && (
+        <Card.Header>
+          {title}
+        </Card.Header>
+      )}      
+      <Card.Body>
         {typeof content === 'string' ? <p>{content}</p> : content}
-      </div>
+      </Card.Body>
       {actions && actions.length > 0 && (
-        <div className="reusable-card-footer">
+        <Card.Footer>
           {actions.map((action, index) => (
-            <button key={index} className="reusable-card-button">
+            <Button key={index} variant="primary">
               {action.text}
-            </button>
+            </Button>
           ))}
-        </div>
+        </Card.Footer>
+      )}
 
         
-      )};
-    </div>
+    </Card>
     )
   };
 
-export default ReusableCard;
+  export default ReusableCard;

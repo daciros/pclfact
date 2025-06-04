@@ -1,6 +1,11 @@
 import axios from 'axios';
+//import env from '../../Config';
+const env = {
+    API_URL: 'https://3050-idx-pclfactgit-1745446889691.cluster-f4iwdviaqvc2ct6pgytzw4xqy4.cloudworkstations.dev/'
+}
 
-const API_BASE_URL = 'http://localhost:3000'; // Replace with your API base URL
+const API_BASE_URL = env.API_URL || 'http://localhost:3050'; // Replace with your API base URL
+const apiUrl= env.API_URL;
 
 const fetchData = async (url, method = 'GET', body = null) => {
   try {
@@ -13,7 +18,7 @@ const fetchData = async (url, method = 'GET', body = null) => {
     };
 
     if (body) {
-      config.data = body;
+        config.data = body;
     }
 
     const response = await axios(config);
@@ -25,6 +30,12 @@ const fetchData = async (url, method = 'GET', body = null) => {
   }
 };
 
+const fetchGeneric = async (endpoint) => {
+  console.log(fetch(`${apiUrl}${endpoint}`));
+  const response = await fetch(`${apiUrl}${endpoint}`);
+  const data = await response.json();
+  return data;
+};
 
 const createProduct = async (productData) => {
   try {
@@ -36,9 +47,9 @@ const createProduct = async (productData) => {
   }
 };
 
-const getAllProducts = async () => {
+const getAllGeneric = async (endpoint) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/products`);
+      const response = await axios.get(`${API_BASE_URL}${endpoint}`);
       return response.data;
     } catch (error) {
       console.error('Error getting products:', error);
@@ -68,4 +79,4 @@ const getAllProducts = async () => {
       throw error;
     }
   };
-export { fetchData, createProduct, getAllProducts,createInvoice, getAllInvoices, getAllClients };
+export { fetchData, createProduct, getAllGeneric, createInvoice, getAllInvoices, getAllClients, fetchGeneric };

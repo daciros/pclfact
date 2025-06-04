@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../styles/ProductForm.scss';
-
+import { Card, Form, InputGroup, Label } from 'react-bootstrap';
 const API_URL = 'http://localhost:3000/api/products';
 function ProductForm() {
   const [formData, setFormData] = useState({
@@ -46,66 +45,69 @@ function ProductForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="product-form">
-      {error && <div className='error'>{error}</div>}
-      <div className='form-group'>
-          <label htmlFor="productName" className='form-label'>
-            Product Name:
-          </label>
-          <input
-            type="text"
-            id="productName"
-            value={formData.productName}
-            onChange={handleInputChange}
-            required
-            className='form-input'
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor="description" className='form-label'>
-            Description:
-          </label>
-          <textarea
-            id="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            className='form-input'
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor="price" className='form-label'>
-            Price:
-          </label>
-          <input
-            type="number"
-            min="0"
-            pattern="^\d*(\.\d{0,2})?$"
-            id="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            required
-            className='form-input'
-          />
-        </div>
-        <div className='form-group'>
-          <label htmlFor="stock" className='form-label'>
-            Stock:
-          </label>
-          <input
-            type="number"
-            min="0"
-            id="stock"
-            value={formData.stock}
-            onChange={handleInputChange}
-            required
-            className='form-input'
-          />
-        </div>
-      
-      <button type="submit" className='form-button'>
-        Save
-      </button>
-    </form>
+    <Card className="p-3">
+        <Form onSubmit={handleSubmit}>
+          {error && <div className="alert alert-danger">{error}</div>}
+          <Form.Group className="mb-3">
+              <Form.Control className="mb-3">
+              <Form.Label htmlFor="productName" className="form-label">
+                Product Name:
+              </Form.Label>
+              <Form.Text
+                type="text"
+                id="productName"
+                value={formData.productName}
+                onChange={handleInputChange}
+                required
+                className="form-control"
+              />
+            </Form.Control>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description:
+              </label>
+              <textarea
+                id="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="price" className="form-label">
+                Price:
+              </label>
+              <input
+                type="number"
+                min="0"
+                pattern="^\d*(\.\d{0,2})?$"
+                id="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                required
+                className="form-control"
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="stock" className="form-label">
+                Stock:
+              </label>
+              <input
+                type="number"
+                min="0"
+                id="stock"
+                value={formData.stock}
+                onChange={handleInputChange}
+                required
+                className="form-control"
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Save
+            </button>
+          </Form.Group>
+        </Form>
+    </Card>
   );
 };
 

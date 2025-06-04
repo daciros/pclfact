@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const API_DATA_URL = 'http://localhost:3090/api/inventories';
+const API_DATA_URL = '/api/inventories';
 
 // Create a new inventory
 exports.createInventory = async (req, res) => {

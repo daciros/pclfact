@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import '../styles/OrderForm.scss'
+import { Form, Button, Card, Alert } from 'react-bootstrap';
+
+
 const OrderForm = () => {
   const [orderData, setOrderData] = useState({
     clientId: '',
@@ -56,69 +58,68 @@ const OrderForm = () => {
   };
 
   return (
-    <div className='order-form-container'>
-      <h2>Create New Order</h2>
-      {error && <div className='error'>{error}</div>}
-      <form className='order-form' onSubmit={handleSubmit}>
-        <div className='form-group'>
-          <label className='order-label' htmlFor="clientId">Client ID:</label>
-          <input className='order-input'
-            type="text"
-            id="clientId"
-            name="clientId"
-            value={orderData.clientId}
-            onChange={handleChange}
-            required
-          />
-        </div><div className='form-group'>
-          <label className='order-label' htmlFor="products">Products:</label>
-          <input className='order-input'
-           type="text"
-            id="products"
-            name="products"
-            value={orderData.products}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='form-group'>
-          <label className='order-label' htmlFor="date">Date:</label>
-          <input className='order-input'
-            type="date"
-            id="date"
-            name="date"
-            value={orderData.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label className='order-label' htmlFor="total">Total:</label>
-          <input className='order-input'
-            type="number"
-            id="total"
-            name="total"
-            value={orderData.total}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='form-group'>
-        <label className='order-label' htmlFor="status">Status:</label>
-          <select className='order-select' id="status" name="status" value={orderData.status} onChange={handleChange}>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-            <option value="canceled">Canceled</option>
-          </select>
-        </div>
-        <div className='order-button-container'>
-          <button className='order-button' type="submit" disabled={loading}>
-            {loading ? 'Creating...' : 'Create Order'}
-          </button>
-          <button className='order-button' type="button" onClick={handleReset}>
-            Reset
-          </button>
-        </div>
-      </form>
-    </div>
+    <Card>
+      <Card.Body>
+        <Card.Title>Create New Order</Card.Title>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="clientId">
+            <Form.Label>Client ID:</Form.Label>
+            <Form.Control
+              type="text"
+              name="clientId"
+              value={orderData.clientId}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="products">
+            <Form.Label>Products:</Form.Label>
+            <Form.Control
+              type="text"
+              name="products"
+              value={orderData.products}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="date">
+            <Form.Label>Date:</Form.Label>
+            <Form.Control
+              type="date"
+              name="date"
+              value={orderData.date}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="total">
+            <Form.Label>Total:</Form.Label>
+            <Form.Control
+              type="number"
+              name="total"
+              value={orderData.total}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="status">
+            <Form.Label>Status:</Form.Label>
+            <Form.Select name="status" value={orderData.status} onChange={handleChange}>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+              <option value="canceled">Canceled</option>
+            </Form.Select>
+          </Form.Group>
+          <div className="d-flex justify-content-end">
+            <Button variant="primary" type="submit" disabled={loading} className="me-2">
+              {loading ? 'Creating...' : 'Create Order'}
+            </Button>
+            <Button variant="secondary" type="button" onClick={handleReset}>
+              Reset
+            </Button>
+          </div>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../styles/UserForm.scss';
+import { Form, Button, Card, Alert } from 'react-bootstrap';
+
 
 function UserForm() {
   const [user, setUser] = useState({
@@ -52,65 +53,42 @@ function UserForm() {
   };
 
   return (
-    <div className="user-form-container">
-      <h2>Create User</h2>
-      {error && <div className='error'>{error}</div>}
-      <form className="user-form" onSubmit={handleSubmit}>
-        <div className='form-group'>
-          <label className='user-label' htmlFor="username">Username:</label>
-          <input className='user-input'
-              type="text"
-              id="username"
-              name="username"
-              value={user.username}
-              onChange={handleChange}
-              required
-            />
-        </div>
-        <div className='form-group'>
-          <label className='user-label' htmlFor="email">Email:</label>
-          <input className='user-input'
-              type="email"
-              id="email"
-              name="email"
-              value={user.email}
-              onChange={handleChange}
-              required
-            />
-        </div>
-        <div className='form-group'>
-          <label className='user-label' htmlFor="password">Password:</label>
-          <input className='user-input'
-              type="password"
-              id="password"
-              name="password"
-              value={user.password}
-              onChange={handleChange}
-              required
-            />
-        </div>
-        <div className='form-group'>
-          <label className='user-label' htmlFor="role">Role:</label>
-          <input className='user-input'
-              type="text"
-              id="role"
-              name="role"
-              value={user.role}
-              onChange={handleChange}
-              required
-            />
-        </div>
-        <div className='form-group'>
-            <button className='user-button' type="submit" disabled={loading}>
-              {loading ? 'Creating...' : 'Create User'}
-            </button>
-            <button className='user-button' type="button" onClick={handleReset} disabled={loading}>
-              Reset
-            </button>
-        </div>
-      </form>
+    <div className='container mt-4'>
+       <Card>
+        <Card.Body>
+          <Card.Title>Create User</Card.Title>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="username">
+              <Form.Label>Username:</Form.Label>
+              <Form.Control type="text" name="username" value={user.username} onChange={handleChange} required />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email:</Form.Label>
+              <Form.Control type="email" name="email" value={user.email} onChange={handleChange} required />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password:</Form.Label>
+              <Form.Control type="password" name="password" value={user.password} onChange={handleChange} required />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="role">
+              <Form.Label>Role:</Form.Label>
+              <Form.Control type="text" name="role" value={user.role} onChange={handleChange} required />
+            </Form.Group>
+            <div className="d-flex justify-content-end">
+              <Button className="me-2" variant="primary" type="submit" disabled={loading}>
+                {loading ? 'Creating...' : 'Create User'}
+              </Button>
+              <Button variant="secondary" type="button" onClick={handleReset} disabled={loading}>
+                Reset
+              </Button>
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
     </div>
   );
 };
 
 export default UserForm;
+

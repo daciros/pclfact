@@ -1,47 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { fetchSuppliers } from '../utils/api';
-import '../styles/SupplierList.scss';
-
+import { fetchGeneric } from '../utils/api';
+import { Card, Button, ListGroup } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
 const SupplierList = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const loadSuppliers = async () => {
+  const fetchSuppliers = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const data = await fetchSuppliers();
+        const data = await fetchGeneric('suppliers');
         setSuppliers(data);
       } catch (err) {
-        setError('Error loading suppliers.');
+        setError(err.message || 'An error occurred while fetching suppliers');
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    loadSuppliers();
+  useEffect(() => {
+    fetchSuppliers();
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading suppliers...</div>;
+    return <div className="text-center mt-4">Loading suppliers...</div>;
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return <Alert variant="danger" className="mt-4">{error}</Alert>;
   }
 
   return (
-    <div className="supplier-list-container">
-      <h2>Supplier List</h2>
-      <button>Create Supplier</button>
-      <ul>
-        {suppliers.map((supplier) => (
-          <li key={supplier.id}>
-            {supplier.name} - {supplier.contact}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container className="mt-4">
+      <Card>
+        <Card.Header className="d-flex justify-content-between align-items-center">
+          <h2 className="mb-0">Supplier List</h2>
+          <Button variant="primary">Create Supplier</Button>
+        </Card.Header>
+        <Card.Body>
+          <ListGroup>
+            {suppliers.map((supplier) => (
+              <ListGroup.Item key={supplier.id}>
+                {supplier.name} - {supplier.contact}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
 

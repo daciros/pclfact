@@ -1,7 +1,8 @@
 const axios = require('axios');
+const config = require('../config');
 
 // URL base de la API de la base de datos para clientes
-const API_DATA_URL = 'http://localhost:3090/api/clients';
+const API_DATA_URL = '/api/clients/';
 
 // Controlador para obtener todos los clientes
 exports.getClients = async (req, res) => {
@@ -12,7 +13,7 @@ exports.getClients = async (req, res) => {
         res.json(response.data);
     } catch (error) {
         // Si ocurre un error, responde con un código de estado 500 y un mensaje de error
-        res.status(500).json({ message: 'Error al obtener los clientes' });
+        res.status(500).json({ message: 'Error al obtener los clientes', error: error.message });
     }
 };
 

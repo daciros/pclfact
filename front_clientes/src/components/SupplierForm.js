@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../styles/SupplierForm.scss';
+import { Form, Button, Card, Alert } from 'react-bootstrap';
+
 
 function SupplierForm() {
   const [supplierData, setSupplierData] = useState({
@@ -53,52 +54,60 @@ function SupplierForm() {
   };
 
   return (
-    <div className="supplier-form-container">
-      <h2>Create New Supplier</h2>
-      {error && <div className="supplier-form-error">{error}</div>}
-      <form onSubmit={handleSubmit} className='supplier-form'>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={supplierData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="contact">Contact:</label>
-          <input
-            type="text"
-            id="contact"
-            name="contact"
-            value={supplierData.contact}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={supplierData.address}
-            onChange={handleChange}
-          />
-        </div>
-        {/* Add more input fields as needed */}
-        <div className='supplier-form-buttons'>
-          <button type="submit" disabled={loading} className='supplier-form-button'>
-            {loading ? 'Creating...' : 'Create Supplier'}
-          </button>
-          <button type="button" onClick={handleReset} disabled={loading} className='supplier-form-button'>
-            Reset
-          </button>
-        </div>
-      </form>
-    </div>
+    <Card className="mt-4">
+      <Card.Body>
+        <Card.Title>Create New Supplier</Card.Title>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="name">
+            <Form.Label>Name:</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={supplierData.name}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="contact">
+            <Form.Label>Contact:</Form.Label>
+            <Form.Control
+              type="text"
+              name="contact"
+              value={supplierData.contact}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="address">
+            <Form.Label>Address:</Form.Label>
+            <Form.Control
+              type="text"
+              name="address"
+              value={supplierData.address}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <div className="d-flex justify-content-end">
+            <Button
+              type="submit"
+              variant="primary"
+              className="me-2"
+              disabled={loading}
+            >
+              {loading ? 'Creating...' : 'Create Supplier'}
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={handleReset}
+              disabled={loading}
+            >
+              Reset
+            </Button>
+          </div>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 }
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/ReusableMenu.scss';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Container from 'react-bootstrap/Container';
 
 function ReusableMenu() {
     const items = [
@@ -10,16 +13,35 @@ function ReusableMenu() {
       ];
 
     return (
-        <div className='menu-container'>
-            <ul className='menu-list'>
-                {items.map((item, index) => (
-                    <li key={index}>
-                         <Link to={item.route}>{item.label}</Link>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );   
+      <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="flex-column" variant="pills">
+        {items.map((item, index) => (
+          <Nav.Item key={index}>
+            <Nav.Link as={Link} to={item.route}>
+              {item.label}
+            </Nav.Link>
+          </Nav.Item>
+        ))}
+         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+      </Nav>
+      </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    );
     }
 
 export default ReusableMenu;

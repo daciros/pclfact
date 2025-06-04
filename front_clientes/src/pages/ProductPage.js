@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ProductForm from '../components/ProductForm';
 import ProductList from '../components/ProductList';
-import '../styles/ProductPage.scss';
+//import '../styles/ProductPage.scss';
+import { Container } from 'react-bootstrap';
 
 function ProductPage() {
   const [showForm, setShowForm] = useState(false);
@@ -11,7 +12,7 @@ function ProductPage() {
   };
 
   return (
-    <div className="product-page-container">
+    <Container className="container-fluid">
       <h1>Product Management</h1>
       <div className="product-page-container">
       {showForm ? (
@@ -22,7 +23,7 @@ function ProductPage() {
         </>
       )}
       </div>
-    </div>
+    </Container>
   );
 }
 export default ProductPage;

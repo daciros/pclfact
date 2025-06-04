@@ -1,45 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { getCategories } from '../utils/api';
-import '../styles/CategoryList.scss';
+import { fetchGeneric } from '../utils/api';
+import { Card, Button, ListGroup, Alert } from 'react-bootstrap';
+
+
 
 function CategoryList() {
   const [categories, setCategories] = useState([]);
-  [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
       setError(null);
-      try {
-        const data = await getCategories();
+      try{
+        const data = await fetchGeneric('categories');
         setCategories(data);
       } catch (err) {
-        setError(err.message || 'An error occurred');
+          setError(err.message || 'An error occurred');
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchCategories();
+  };
+  fetchCategories();
   }, []);
 
   return (
-    <div className='category-list-container'>
-      <h2>Category List</h2>
-      {loading && <p className='loading'>Loading categories...</p>}
-      {error && <p className='error'>Error: {error}</p>}
-      {!loading && !error && (
-        <>
-          <button className='create-category-button'>Create Category</button>
-          <ul>
-            {categories.map((category) => (
-              <li key={category.id}>{category.name}</li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
+    <Card>
+      <Card.Header>Category List</Card.Header>
+      <Card.Body>
+        {loading && <Alert variant="info">Loading categories...</Alert>}
+        {error && <Alert variant="danger">Error: {error}</Alert>}
+        {!loading && !error && (
+          <>
+            <Button variant="primary" className="mb-3">Create Category</Button>
+            <ListGroup>
+              {categories.map((category) => (
+                <ListGroup.Item key={category.id}>{category.name}</ListGroup.Item>
+              ))}
+            </ListGroup>
+          </>
+        )}
+      </Card.Body>
+    </Card>
   );
 }
 

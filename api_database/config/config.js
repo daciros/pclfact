@@ -35,4 +35,5 @@ try {
 module.exports = {
   mongoURI: decryptedUri,
   secretOrKey: 'secret',
+  SECRET_KEY: 'aecb28ab0146b6149a840f90f8b1a6f1'
 };

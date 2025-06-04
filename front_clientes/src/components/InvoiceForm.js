@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { createInvoice, getAllProducts, getAllClients } from '../utils/api';
-import '../styles/InvoiceForm.scss';
+import { createInvoice, getAllGeneric, getAllClients } from '../utils/api';
+import { Form, Button, Card, Alert, ListGroup } from 'react-bootstrap';
+
+
 
 function InvoiceForm() {
   const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ function InvoiceForm() {
     const fetchClientsAndProducts = async () => {
         try {
             const clients = await getAllClients();
-            const products = await getAllProducts();
+            const products = await getAllGeneric('/products');
             setAvailableClients(clients);
             setAvailableProducts(products);
         } catch (err) {
@@ -56,8 +58,8 @@ function InvoiceForm() {
     }
   };
 
-    const handleCreateInvoice = async (event) => {
-        event.preventDefault();
+  const handleCreateInvoice = async (event) => {
+    event.preventDefault();
 
     if (!formData.clientId || invoiceProducts.length === 0) {
       setError('Client and at least one product are required');
@@ -65,7 +67,7 @@ function InvoiceForm() {
     }
 
     try {
-      const invoiceData = {
+      const invoiceData = { 
         clientId: formData.clientId,
         products: invoiceProducts.map(item => ({ productId: item.product._id, quantity: item.quantity })),
       };
@@ -73,72 +75,81 @@ function InvoiceForm() {
       setInvoiceProducts([]);
       setFormData({clientId: '', productId: '', quantity: 1});
       setError(null)
-    } catch (err) {
-        setError(err.message)
-      console.error('Failed to create invoice:', err);
+    } catch (err) { 
+      setError(err.message);
     }
   };
 
   const calculateTotal = () => {
     const total = invoiceProducts.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
-    setTotal(total)
+    setTotal(total);
   }
   return (
-    <form className='invoice-form' onSubmit={handleCreateInvoice}>
-      {error && <p className='error-message'>{error}</p>}
-        <div className='form-group'>
-            <label htmlFor="clientId">Client:</label>
-            <select
-                className="invoice-select"
-                name="clientId"
-                value={formData.clientId}
-                onChange={handleInputChange}
+    <Card>
+      <Card.Body>
+        <Card.Title>Create Invoice</Card.Title>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleCreateInvoice}>
+          <Form.Group className="mb-3" controlId="clientId">
+            <Form.Label>Client:</Form.Label>
+            <Form.Select
+              name="clientId"
+              value={formData.clientId}
+              onChange={handleInputChange}
             >
-                <option value="">Select a client</option>
-                {availableClients.map((client) => (
-                    <option key={client._id} value={client._id}>
-                        {client.name}
-                    </option>
-                ))}
-            </select>
-        </div>
-        <div className='form-group'>
-            <label htmlFor="productId">Product:</label>
-            <select
-                className="invoice-select"
-                name="productId"
-                value={formData.productId}
-                onChange={handleInputChange}
+              <option value="">Select a client</option>
+              {availableClients.map((client) => (
+                <option key={client._id} value={client._id}>
+                  {client.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="productId">
+            <Form.Label>Product:</Form.Label>
+            <Form.Select
+              name="productId"
+              value={formData.productId}
+              onChange={handleInputChange}
             >
-                <option value="">Select a product</option>
-                {availableProducts.map((product) => (
-                    <option key={product._id} value={product._id}>
-                        {product.name}
-                    </option>
-                ))}
-            </select>
-        </div>
-        <div className='form-group'>
-            <label htmlFor="quantity">Quantity:</label>
-            <input type="number" name="quantity" value={formData.quantity} min="1" onChange={handleInputChange} />
-        </div>
+              <option value="">Select a product</option>
+              {availableProducts.map((product) => (
+                <option key={product._id} value={product._id}>
+                  {product.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="quantity">
+            <Form.Label>Quantity:</Form.Label>
+            <Form.Control
+              type="number"
+              name="quantity"
+              value={formData.quantity}
+              min="1"
+              onChange={handleInputChange}
+            />
+          </Form.Group>
 
-        <button className="invoice-button" onClick={handleAddProduct}>Add Product</button>
-        <div>
-            <h3>Products in Invoice:</h3>
-            <ul>
-                {invoiceProducts.map((item, index) => (
-                    <li key={index}>{item.product.name} - Quantity: {item.quantity}
-                    </li>
-                ))}
+          <Button type="button" variant="primary" className="me-2" onClick={handleAddProduct}>Add Product</Button>
+          <div className="mt-3">
+            <h4>Products in Invoice:</h4>
+            <ul className="list-group">
+              {invoiceProducts.map((item, index) => (
+                <li key={index} className="list-group-item">
+                  {item.product.name} - Quantity: {item.quantity}
+                </li>
+              ))}
             </ul>
-        </div>
-        <div>
-            <button className="invoice-button" onClick={calculateTotal}>Calculate total</button>
-            <h3>Total: {total}</h3>
-        </div><button className="invoice-button" type="submit">Create Invoice</button>
-    
-    </form>
+          </div>
+            <div className="mt-3">
+                <Button type="button" variant="primary" className="me-2" onClick={calculateTotal}>Calculate total</Button>
+                <h3>Total: {total}</h3>
+            </div>
+          <Button type="submit" variant="primary">Create Invoice</Button>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 }
 

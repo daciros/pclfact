@@ -1,6 +1,8 @@
 const axios = require('axios');
+const config = require('../config');
 
-const API_DATA_URL = 'http://localhost:3090/api/accountings';
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:3871826602.
+const API_DATA_URL = '/api/accountings';
 
 
 exports.getAllAccountings = async (req, res) => {
